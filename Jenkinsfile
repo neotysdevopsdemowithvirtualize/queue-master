@@ -51,8 +51,8 @@ pipeline {
             }
 
         }
-      }
     }
+
 
     stage('Deploy to dev namespace') {
 
