@@ -104,7 +104,7 @@ pipeline {
                       project: "$WORKSPACE/target/neoload/queuemaster_NeoLoad/queuemaster_NeoLoad.nlp",
                       testName: 'HealthCheck_queuemaster_${VERSION}_${BUILD_NUMBER}',
                       testDescription: 'HealthCheck_queuemaster_${VERSION}_${BUILD_NUMBER}',
-                      commandLineOption: "-nlweb -loadGenerators $WORKSPACE/infrastructure/infrastructure/neoload/lg/lg.yaml -nlwebToken $NLAPIKEY -variables host=${env.APP_NAME},port=8082,basicPath=${BASICCHECKURI}",
+                      commandLineOption: "-nlweb -loadGenerators $WORKSPACE/infrastructure/infrastructure/neoload/lg/lg.yaml -nlwebToken $NLAPIKEY -variables host=${env.APP_NAME},port=8084,basicPath=${BASICCHECKURI}",
                       scenario: 'DynatraceSanityCheck', sharedLicense: [server: 'NeoLoad Demo License', duration: 2, vuCount: 200],
                       trendGraphs: [
                               [name: 'Limit test Catalogue API Response time', curve: ['CatalogueList>Actions>Get Catalogue List'], statistic: 'average'],
@@ -130,7 +130,7 @@ pipeline {
                               project: "$WORKSPACE/target/neoload/queuemaster_NeoLoad/queuemaster_NeoLoad.nlp",
                               testName: 'DynatraceSanityCheck_queuemaster_${VERSION}_${BUILD_NUMBER}',
                               testDescription: 'DynatraceSanityCheck_queuemaster_${VERSION}_${BUILD_NUMBER}',
-                              commandLineOption: "-nlweb -loadGenerators $WORKSPACE/infrastructure/infrastructure/neoload/lg/lg.yaml -nlwebToken $NLAPIKEY -variables host=${env.APP_NAME},port=8082",
+                              commandLineOption: "-nlweb -loadGenerators $WORKSPACE/infrastructure/infrastructure/neoload/lg/lg.yaml -nlwebToken $NLAPIKEY -variables host=${env.APP_NAME},port=8084",
                               scenario: 'DYNATRACE_SANITYCHECK', sharedLicense: [server: 'NeoLoad Demo License', duration: 2, vuCount: 200],
                               trendGraphs: [
                                       [name: 'Limit test Catalogue API Response time', curve: ['CatalogueList>Actions>Get Catalogue List'], statistic: 'average'],
@@ -169,7 +169,7 @@ pipeline {
                       project: "$WORKSPACE/target/neoload/queuemaster_NeoLoad/queuemaster_NeoLoad.nlp",
                       testName: 'FuncCheck_queuemaster__${VERSION}_${BUILD_NUMBER}',
                       testDescription: 'FuncCheck_queuemaster__${VERSION}_${BUILD_NUMBER}',
-                      commandLineOption: "-nlweb -loadGenerators $WORKSPACE/infrastructure/infrastructure/neoload/lg/lg.yaml -nlwebToken $NLAPIKEY -variables host=${env.APP_NAME},port=8082,basicPath=${BASICCHECKURI}",
+                      commandLineOption: "-nlweb -loadGenerators $WORKSPACE/infrastructure/infrastructure/neoload/lg/lg.yaml -nlwebToken $NLAPIKEY -variables host=${env.APP_NAME},port=8084,basicPath=${BASICCHECKURI}",
                       scenario: 'QueueMaster_Load', sharedLicense: [server: 'NeoLoad Demo License', duration: 2, vuCount: 200],
                       trendGraphs: [
                               [name: 'Limit test Catalogue API Response time', curve: ['CatalogueList>Actions>Get Catalogue List'], statistic: 'average'],
