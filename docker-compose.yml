@@ -9,7 +9,7 @@ services:
     hostname: queue-master
     restart: always
     environment:
-      - DT_CUSTOM_PROP=app=queue-master,environment=dev
+      - DT_CUSTOM_PROP=app=queue-master environment=dev
     cap_drop:
     - all
     cap_add:
