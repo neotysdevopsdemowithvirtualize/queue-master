@@ -93,6 +93,7 @@ pipeline {
             dockerfile {
                 args '--user root -v /tmp:/tmp --network=queue-master_master_default'
                 dir 'infrastructure/infrastructure/neoload/controller'
+                reuseNode true
             }
         }
       steps {
@@ -122,6 +123,7 @@ pipeline {
             dockerfile {
                 args '--user root -v /tmp:/tmp --network=queue-master_master_default'
                 dir 'infrastructure/infrastructure/neoload/controller'
+                reuseNode true
             }
         }
               steps {
@@ -160,6 +162,7 @@ pipeline {
             dockerfile {
                 args '--user root -v /tmp:/tmp --network=queue-master_master_default'
                 dir 'infrastructure/infrastructure/neoload/controller'
+                reuseNode true
             }
         }
 
