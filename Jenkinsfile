@@ -40,6 +40,13 @@ pipeline {
       }
 
     }
+      stage('create docker netwrok') {
+
+                       steps {
+                            sh "docker network create ${APP_NAME}_${VERSION} || true"
+
+                       }
+               }
     stage('Docker build') {
 
         steps {
@@ -59,6 +66,8 @@ pipeline {
       steps {
 
           sh "sed -i 's,TAG_TO_REPLACE,${TAG_DEV},' $WORKSPACE/docker-compose.yml"
+          sh "sed -i 's,TO_REPLACE,${APP_NAME}_${VERSION},'  $WORKSPACE/docker-compose.yml"
+
           sh 'docker-compose -f $WORKSPACE/docker-compose.yml up -d'
 
       }
@@ -78,20 +87,17 @@ pipeline {
     }*/
     stage('Start NeoLoad infrastructure') {
         steps {
+            sh "sed -i 's,TO_REPLACE,${APP_NAME}_${VERSION},'  $WORKSPACE/infrastructure/infrastructure/neoload/lg/docker-compose.yml"
             sh 'docker-compose -f $WORKSPACE/infrastructure/infrastructure/neoload/lg/docker-compose.yml up -d'
 
         }
 
     }
-    stage('Join Load Generators to Application') {
-        steps {
-            sh 'docker network connect queue-master_master_default docker-lg1'
-        }
-    }
+
     stage('Run health check in dev') {
         agent {
             dockerfile {
-                args '--user root -v /tmp:/tmp --network=queue-master_master_default'
+                args '--user root -v /tmp:/tmp --network=${APP_NAME}_${VERSION}'
                 dir 'infrastructure/infrastructure/neoload/controller'
                 reuseNode true
             }
@@ -121,7 +127,7 @@ pipeline {
     stage('Sanity Check') {
         agent {
             dockerfile {
-                args '--user root -v /tmp:/tmp --network=queue-master_master_default'
+                args '--user root -v /tmp:/tmp --network=${APP_NAME}_${VERSION}'
                 dir 'infrastructure/infrastructure/neoload/controller'
                 reuseNode true
             }
@@ -159,7 +165,7 @@ pipeline {
     stage('Run functional check in dev') {
         agent {
             dockerfile {
-                args '--user root -v /tmp:/tmp --network=queue-master_master_default'
+                args '--user root -v /tmp:/tmp --network=${APP_NAME}_${VERSION}'
                 dir 'infrastructure/infrastructure/neoload/controller'
                 reuseNode true
             }
@@ -197,6 +203,7 @@ pipeline {
 
               sh 'docker-compose -f $WORKSPACE/infrastructure/infrastructure/neoload/lg/docker-compose.yml down'
               sh 'docker-compose -f $WORKSPACE/docker-compose.yml down'
+              sh 'docker network rm ${APP_NAME}_${VERSION} || true'
               cleanWs()
               sh 'docker volume prune'
           }

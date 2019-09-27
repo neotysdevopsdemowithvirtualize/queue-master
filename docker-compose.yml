@@ -17,3 +17,7 @@ services:
     read_only: true
     ports:
     - "8084:80"
+networks:
+  default:
+    external:
+      name: TO_REPLACE
